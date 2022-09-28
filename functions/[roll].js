@@ -1,20 +1,12 @@
-/*addEventListener("fetch", (event) => {
-    event.respondWith(
-      handleRequest(event.request).catch(
-        (err) => new Response(err.stack, { status: 500 })
-      )
-    );
-  });
-  
-  
-  async function handleRequest(request) {
+
+  async function diceResult(roll) {
     const { pathname } = new URL(request.url);
     const result = pathname.match(/d([0-9]+)/)
     if (result) {
-      return new Response((Math.floor(Math.random() * result[1]))+1); 
+      return (Math.floor(Math.random() * result[1]))+1;
     }
   }
-  */
+
   export async function onRequest(context) {
     // Contents of context object
     const {
@@ -25,7 +17,25 @@
       next, // used for middleware or to fetch assets
       data, // arbitrary space for passing data between middlewares
     } = context;
-  
-    return new Response("Hello, world: " + params.roll);
+
+    const requestedRolls = params.roll.split(',');
+    let results = []
+
+    // roll the bones
+    for (const requestedRoll of requestedRolls) {
+      const result = await diceResult(requestedRoll);
+      if (result) {
+        results.push({roll: requestedRoll, result: result});
+      }
+    }
+
+    // serialize to string
+
+    let stringResponse = "";
+    for (const result of results) {
+      stringResponse += `${result.roll}: ${result.result}\n`;
+    }
+
+    return new Response(stringResponse);
   }
   
