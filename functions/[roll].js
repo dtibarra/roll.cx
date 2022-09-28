@@ -26,6 +26,6 @@
       data, // arbitrary space for passing data between middlewares
     } = context;
   
-    return new Response("Hello, world: " + params);
+    return new Response("Hello, world: " + params.roll);
   }
   
