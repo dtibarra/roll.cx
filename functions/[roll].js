@@ -38,7 +38,7 @@
     // serialize `results` to string
     let stringResponse = "";
     for (const result of results) {
-      stringResponse += `${result.roll}: ${result.result.join(' + ')}`;
+      stringResponse += `${result.roll}: ${result.result.join(' + ')}\n`;
     }
 
     return new Response(stringResponse);
