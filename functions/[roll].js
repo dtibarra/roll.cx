@@ -21,7 +21,6 @@
   }
   async function serializeResultsForTerminal(results) {
     let stringResponse = "";
-    const resetCode = '\033[0m';
     for (const result of results) {
       stringResponse += `${result.roll}: ${result.result.join(' + ')}\n`;
     }
