@@ -1,9 +1,13 @@
 
   async function diceResult(requestedRoll) {
-    const result = requestedRoll.match(/d([0-9]+)/)
+    const result = requestedRoll.match(/([0-9]+)?d([0-9]+)/)
+    let rollResults = [];
     if (result) {
-      return (Math.floor(Math.random() * result[1]))+1;
+      for (let i = 0; i < result[1]; i++) {
+        rollResults.push((Math.floor(Math.random() * result[2]))+1);
+      }
     }
+    return rollResults;
   }
 
   export async function onRequest(context) {
@@ -21,7 +25,7 @@
     const requestedRolls = params.roll.split(',');
     let results = []
 
-    // roll the bones
+    // roll the bones, store into `results`
     for (const requestedRoll of requestedRolls) {
       const result = await diceResult(requestedRoll);
       if (result) {
@@ -29,11 +33,10 @@
       }
     }
 
-    // serialize to string
-
+    // serialize `results` to string
     let stringResponse = "";
     for (const result of results) {
-      stringResponse += `${result.roll}: ${result.result}\n`;
+      stringResponse += `${result.roll}: ${result.result.join(' + ')}`;
     }
 
     return new Response(stringResponse);
