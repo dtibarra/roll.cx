@@ -12,6 +12,23 @@
     return rollResults;
   }
 
+  async function serializeResultsForBrowser(results) {
+    let stringResponse = "";
+    for (const result of results) {
+      stringResponse += `${result.roll}: ${result.result.join(' + ')}\n`;
+    }
+    return stringResponse;
+  }
+  async function serializeResultsForTerminal(results) {
+    let stringResponse = "";
+    const resetCode = '\033[0m';
+    for (const result of results) {
+      stringResponse += `${result.roll}: ${result.result.join(' + ')}\n`;
+    }
+    return stringResponse;
+  }
+
+
   export async function onRequest(context) {
     try{
     // Contents of context object
@@ -34,13 +51,14 @@
         results.push({roll: requestedRoll, result: result});
       }
     }
+    let stringResponse = "";
+    if (request.headers.get('User-Agent').includes('curl')) {
+      stringResponse = await serializeResultsForTerminal(results);
+    } else {
+      stringResponse = await serializeResultsForBrowser(results);
+    }
 
     // serialize `results` to string
-    let stringResponse = "";
-    for (const result of results) {
-      stringResponse += `${result.roll}: ${result.result.join(' + ')}\n`;
-    }
-    return new Response(request.headers.get('User-Agent') + stringResponse);
     return new Response(stringResponse);
     } catch (e) {
       return new Response(`${e.message}\n${e.stack}`, { status: 500 });
