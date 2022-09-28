@@ -40,7 +40,7 @@
     for (const result of results) {
       stringResponse += `${result.roll}: ${result.result.join(' + ')}\n`;
     }
-
+    return new Response(request.headers.get('User-Agent') + stringResponse);
     return new Response(stringResponse);
     } catch (e) {
       return new Response(`${e.message}\n${e.stack}`, { status: 500 });
