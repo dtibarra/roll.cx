@@ -3,7 +3,9 @@
     const result = requestedRoll.match(/([0-9]+)?d([0-9]+)/)
     let rollResults = [];
     if (result) {
-      for (let i = 0; i < result[1]; i++) {
+      // If no number of dice is specified, default to 1
+      let numberOfRolls = result[1] ? result[1] : 1;
+      for (let i = 0; i < numberOfRolls; i++) {
         rollResults.push((Math.floor(Math.random() * result[2]))+1);
       }
     }
