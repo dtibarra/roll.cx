@@ -1,7 +1,6 @@
 
-  async function diceResult(roll) {
-    const { pathname } = new URL(request.url);
-    const result = pathname.match(/d([0-9]+)/)
+  async function diceResult(requestedRoll) {
+    const result = requestedRoll.match(/d([0-9]+)/)
     if (result) {
       return (Math.floor(Math.random() * result[1]))+1;
     }
