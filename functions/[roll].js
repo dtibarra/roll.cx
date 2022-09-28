@@ -8,6 +8,7 @@
   }
 
   export async function onRequest(context) {
+    try{
     // Contents of context object
     const {
       request, // same as existing Worker API
@@ -37,5 +38,8 @@
     }
 
     return new Response(stringResponse);
+    } catch (e) {
+      return new Response(`${e.message}\n${e.stack}`, { status: 500 });
+    }
   }
   
