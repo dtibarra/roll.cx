@@ -124,12 +124,12 @@ async function handleHomePage(request) {
     <h1>Roll.cx: A Simple Dice Roller</h1>
     <p>Roll.cx is a simple dice roller. You can use it like so:</p>
     <pre><code>$ curl roll.cx/d20
-d20: 1</code></pre>
+d20: 7 = 7</code></pre>
 
     <p>If you want to rull multiple die at once, you can do something like this:</p>
     <pre><code>$ curl roll.cx/2d20,1d6
 2d20: 12 + 9 = 21
-1d6: 1</code></pre>
+1d6: 3 = 3</code></pre>
     <p>If you want something a little more machine readable, try passing a different content type:</p>
     <pre><code>$ curl -H "Content-Type: application/json" roll.cx/3d20,2d6,1d12
 [{"roll":"3d20","result":[4,18,14]},{"roll":"2d6","result":[5,4]},{"roll":"1d12","result":[1]}]</code></pre>
