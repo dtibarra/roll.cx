@@ -40,7 +40,7 @@ async function serializeResultsForBrowser(results) {
     }
     stringResponse += `\n`;
   }
-  return stringResponse.replace(/\n/g, '');
+  return stringResponse.replace(/\n$/g, '');
 }
 // Serialize for terminals
 async function serializeResultsForTerminal(results) {
