@@ -35,9 +35,7 @@ async function serializeResultsForBrowser(results) {
   let stringResponse = "";
   for (const result of results) {
     stringResponse += `${result.roll}: ${result.result.join(' + ')}`;
-    if (result.result.length > 1) {
-      stringResponse += ` = ${result.result.reduce((a, b) => a + b, 0)}`;
-    }
+    stringResponse += ` = ${result.result.reduce((a, b) => a + b, 0)}`;
     stringResponse += `\n`;
   }
   return stringResponse.replace(/\n$/g, '');
@@ -47,9 +45,7 @@ async function serializeResultsForTerminal(results) {
   let stringResponse = "";
   for (const result of results) {
     stringResponse += '\033[33m' + `${result.roll}` + '\033[39m:\033[35m ' + `${result.result.join(' + ')}` + '\033[39m';
-    if (result.result.length > 1) {
-      stringResponse += ' = \033[32m' + `${result.result.reduce((a, b) => a + b, 0)}` + '\033[39m';
-    }
+    stringResponse += ' = \033[32m' + `${result.result.reduce((a, b) => a + b, 0)}` + '\033[39m';
     stringResponse += `\n`;
   }
   return stringResponse.replace(/\n$/g, '');
